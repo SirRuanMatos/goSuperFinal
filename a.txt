@@ -1,0 +1,2 @@
+
+add preco na leitura de produto(entrada)
