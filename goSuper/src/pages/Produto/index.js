@@ -37,7 +37,9 @@ function Produto(props) {
             }
         });
 
-        assistantProductOpen(props.produto);
+        navigation.addListener('focus', () => {
+            assistantProductOpen(props.produto);
+        });
 
     }, []);
     useEffect(() => {

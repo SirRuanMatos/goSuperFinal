@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { assistantCepRepeat, assistantActivated, assistantCardNumberRepeat, assistantCvvRepeat, getPedidoAberto, toggleAssistantVoice } from "../../services/assistant";
+import { assistantCepRepeat, assistantActivated, assistantCardNumberRepeat, assistantCvvRepeat, getPedidoAberto, toggleAssistantVoice, assistantMessageSend } from "../../services/assistant";
 
 import * as controlAssistantAction from '../../actions/controlAssistantAction';
 import { bindActionCreators, createStore } from 'redux';
@@ -196,6 +196,7 @@ function Record(props) {
       let stringedPayload = JSON.stringify(payload);
       sendMessage(stringedPayload);
       props.addMessage(payload);
+      assistantMessageSend();
 
     } else {
       let today = new Date();
@@ -206,7 +207,6 @@ function Record(props) {
         id_usuario: props.user.id_usuario,
         time: h + ":" + m
       };
-      console.log(msg);
       let stringedPayload = JSON.stringify(payload);
       sendMessageAssistant(stringedPayload);
     }

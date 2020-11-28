@@ -60,30 +60,6 @@ function Menu(props) {
         setMensagem("");
     }
 
-    function assistantActions() {
-        if (mensagem.includes("Ler") && mensagem.includes("mercados")) {
-            let num = mensagem.replace(/[^0-9]/g, '');
-            assistantReadMarkets(num);
-        }
-        if (mensagem.includes("Ler") && mensagem.includes("produtos")) {
-            let num = mensagem.replace(/[^0-9]/g, '');
-            assistantReadProducts(num);
-        }
-        if (mensagem.includes("Ler") && mensagem.includes("descricao")) {
-            assistantReadProductDescription();
-        }
-        if (mensagem.includes("Ler") && mensagem.includes("carrinho")) {
-            assistantReadCart();
-        }
-        if (mensagem.includes("Ler") && mensagem.includes("pedidos")) {
-            let num = mensagem.replace(/[^0-9]/g, '');
-            assistantReadOrders(num);
-        }
-        if (mensagem.includes("Ler") && mensagem.includes("pedido")) {
-            let num = mensagem.replace(/[^0-9]/g, '');
-            assistantReadOrder(num);
-        }
-    }
 
     return (
         <>
@@ -130,22 +106,6 @@ function Menu(props) {
                         <TouchableOpacity style={styles.menuItem} onPress={() => { goTo("Indicar_Amigos") }}>
                             <MaterialIcons name="supervisor-account" size={30} color="#555" />
                             <Text style={styles.menuItemText}>Indicar Amigos</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItemAssistant} onPress={() => { setModalAssistantVisible(!modalAssistantVisible) }}>
-                            <View style={{...styles.menuItem, borderBottomWidth: 0}}>
-                                <MaterialIcons name="supervisor-account" size={30} color="#555" />
-                                <Text style={styles.menuItemText}>Assistente</Text>
-                            </View>
-                            <View>
-                                <Switch
-                                    trackColor={{ false: "#767577", true: "#A00000" }}
-                                    thumbColor={modalAssistantVisible ? "#de0404" : "#f4f3f4"}
-                                    ios_backgroundColor="#3e3e3e"
-                                    onValueChange={() => { setModalAssistantVisible(!modalAssistantVisible) }}
-                                    value={modalAssistantVisible}
-                                    style={{ transform: [{ scaleX: 2.8 }, { scaleY: 2.8 }], position: "absolute", marginTop: 30 }} />
-                            </View>
-
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity >

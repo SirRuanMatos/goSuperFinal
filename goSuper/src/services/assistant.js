@@ -15,6 +15,14 @@ function welcome() {
 function assistantMarketFound() {
     speak(texts.marketFound);
 }
+function assistantMessageReceive(msg) {
+    console.log(msg);
+    speak("Nova mensagem do pedido" + msg.id_pedido);
+}
+function assistantMessageSend() {
+    speak("Sua mensagem foi enviada.");
+}
+
 
 function toggleAssistantVoice(bool){
     setAssistandOn(bool);
@@ -59,7 +67,7 @@ function assistantReadProducts(numProducts) {
     if (numProducts) {
         for (let index = 0; numProducts > index; index++) {
             let element = productsLoaded[index];
-            string += " Produto " + element.nome + ", " + numberToReal(element.preco) + ".";
+            string += " Produto " + element.nome + ", R$" + numberToReal(element.preco) + ".";
         }
     } else {
         for (let index = 0; index < productsLoaded.length; index++) {
@@ -145,7 +153,7 @@ function assistantResumoCompraView(cartRef, subtotal, frete, servico, desconto) 
     } else {
         string += "Desconto: R$" + numberToReal(desconto) + ". ";
     }
-    string += "Valor total do pedido: R$" + ((subtotal + servico + frete) - desconto) + ". "
+    string += "Valor total do pedido: R$" + numberToReal(((subtotal + servico + frete) - desconto)) + ". "
     string += "Você está de acordo?"
     speak(string)
 }
@@ -179,9 +187,6 @@ function getPedidoAberto() {
     return pedidoChat;
 }
 
-/* ,
-,
- */
 function assistantInformCardNumber() {
     speak(texts.informarNumeroCartao);
 }
@@ -193,7 +198,7 @@ function assistantInformCVV() {
 }
 
 function assistantPaymentView() {
-    speak("Forma de pagamento. Por favor nos informe o tipo de pagamento: crédito ou débito, o número de seu cartão, o mês de vencimento, o ano de vencimento e o ceveve.")
+    speak("Forma de pagamento. Por favor nos informe o tipo de pagamento: crédito ou débito.")
 }
 
 function assistantOrderFinal(nome) {
@@ -211,7 +216,7 @@ function assistantReadOrder(id) {
     for (let index = 0; index < orders.length; index++) {
         let element = orders[index];
         if (id == element.id_pedido) {
-            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + new Date(element.data_pedido).toLocaleDateString('pt-BR') + ". Seu fornecedor é " + element.mercadonome + ".";
+            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + new Date(element.data_pedido).toLocaleDateString('pt-br') + ". Seu fornecedor é " + element.mercadonome + ". /n";
             if (element.status == "Confirmado") {
                 string += "Você pode cancelá lo.";
             }
@@ -233,13 +238,14 @@ function assistantReadOrders(numOfOrder) {
     if (numOfOrder) {
         for (let index = 0; numOfOrder > index; index++) {
             let element = orders[index];
-            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + new Date(element.data_pedido).toLocaleDateString('pt-BR') + ". Seu fornecedor é " + element.mercadonome + ".";
-
+            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + element.data_pedido.split("T")[0].split('-').reverse().join('-').replace("-","/").replace("-","/") + ". Seu fornecedor é " + element.mercadonome + ".";
+           
         }
     } else {
         for (let index = 0; index < orders.length; index++) {
             let element = orders[index];
-            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + new Date(element.data_pedido).toLocaleDateString('pt-BR') + ". Seu fornecedor é " + element.mercadonome + ".";
+            string += "Pedido número " + element.id_pedido + ". Está com o estatus" + element.status + ". Data: " + element.data_pedido.split("T")[0].split('-').reverse().join('-').replace("-","/").replace("-","/") + ". Seu fornecedor é " + element.mercadonome + ".";
+            
         }
     }
     speak(string);
@@ -335,5 +341,7 @@ export {
     assistantReadMessages,
     getPedidoAberto,
     toggleAssistantVoice,
-    assistantActivated
+    assistantActivated,
+    assistantMessageSend,
+    assistantMessageReceive
 }

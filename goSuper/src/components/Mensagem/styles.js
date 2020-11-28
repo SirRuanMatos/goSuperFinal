@@ -13,6 +13,7 @@ export default StyleSheet.create({
         paddingLeft:10,
         paddingRight:20,
         borderRadius: 20,
+        maxWidth: 220,
     },
     messageTime:{
         textAlign: "right",

@@ -34,11 +34,21 @@ function Indicar_Amigos(props) {
                 if (respCoupom.data.length > 0) {
                     setCupom(respCoupom.data[0].cupom);
                 }
+            }else{
+                activateCupom()
             }
         }
 
         getCoupon();
     }, []);
+
+    useEffect(() => {
+        console.log("Indicar_Amigos: ", props.assistant);
+        if (props.assistant && props.assistant.action === "shareCode") {
+            compartilhar();
+        }
+
+    }, [props.assistant]);
 
     async function activateCupom() {
         const respCoupom = await api.post("/promocao/", {id_usuario: props.user.id_usuario},{
@@ -105,7 +115,8 @@ const mapStateToProps = state => ({
     user: state.user.user,
     mercado: state.mercado.mercado,
     produto: state.produto.produto,
-    carrinho: state.carrinho
+    carrinho: state.carrinho,
+    assistant: state.assistant.assistant
 });
 
 

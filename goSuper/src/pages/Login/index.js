@@ -74,11 +74,14 @@ function Login(props) {
                                     style={styles.emailInput}
                                     placeholder="Email"
                                     placeholderTextColor="#999"
-                                    autoCapitalize="words"
                                     autoCorrect={false}
                                     onChangeText={handleChange('email')}
                                     onBlur={() => setFieldTouched('email')}
                                     value={values.email}
+                                    autoCompleteType="email"
+                                    keyboardType="email-address"
+                                    textContentType="emailAddress"
+                                    autoCapitalize="none"
                                 />
                                 {touched.email && errors.email &&
                                     <Text style={{ fontSize: 10, color: 'white' }}>{errors.email}</Text>
@@ -88,12 +91,14 @@ function Login(props) {
                                     style={styles.emailInput}
                                     placeholder="Senha"
                                     placeholderTextColor="#999"
-                                    autoCapitalize="words"
+                                    autoCapitalize="none"
                                     autoCorrect={false}
                                     onChangeText={handleChange('senha')}
-                                    onBlur={() => setFieldTouched('senha')}
+                                    onBlur={() => {setFieldTouched('senha');}}
                                     secureTextEntry={true}
                                     value={values.senha}
+                                    returnKeyType ="send"
+                                    onSubmitEditing={()=> handleSubmit()}
                                 />
                                 {touched.senha && errors.senha &&
                                     <Text style={{ fontSize: 10, color: 'white' }}>{errors.senha}</Text>

@@ -1,6 +1,6 @@
 import socketio from 'socket.io-client';
 
-var socket = socketio('http://192.168.15.22:3333', {
+var socket = socketio('http://192.168.15.11:3333', {
     autoConnect: false,
     secure: true,
     transports: ['websocket'],

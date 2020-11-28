@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 
-import { assistantMarketFound, welcome, assistantReadMarkets,assistantMarketsLoaded } from "../../services/assistant";
+import { assistantMarketFound, welcome, assistantReadMarkets,assistantMarketsLoaded, assistantMessageReceive } from "../../services/assistant";
 
 import { connectWebSocket, disconnectWebSocket, arriveMessage, arriveMessageAssistant } from '../../services/socket';
 import { useFocusEffect } from '@react-navigation/native';
@@ -34,6 +34,7 @@ function Home(props) {
         });
         function addMsg(msg) {
             props.addMessage({ ...JSON.parse(msg), typeMessage: "recebido" })
+            assistantMessageReceive(JSON.parse(msg))
         }
         arriveMessage(addMsg)
         connectWebSocket(props.user.id_usuario);
@@ -90,6 +91,9 @@ function Home(props) {
         }
         if (props.assistant && props.assistant.action === "openHome") {
             navigation.navigate('Home');
+        }
+        if (props.assistant && props.assistant.action === "openFriendsIndication") {
+            navigation.navigate('Indicar_Amigos');
         }
         if (props.assistant && props.assistant.action === "openMarket") {
             openMarket(props.assistant.variables.market)
@@ -150,7 +154,7 @@ function Home(props) {
             }
             if (respMercados.status == 200) {
                 setMercados(respMercados.data);
-                if (fromAssistant) {
+                if (props.assistant && props.assistant.action === "search&choose") {
                     goToMercado(respMercados.data[0]);
                 }
             }

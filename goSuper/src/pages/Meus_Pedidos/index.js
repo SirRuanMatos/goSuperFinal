@@ -7,6 +7,8 @@ import Mensagem from "../../components/Mensagem";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as chatAction from '../../actions/chatAction';
 
+import * as carrinhoAction from '../../actions/carrinhoAction';
+
 import { useNavigation } from '@react-navigation/native';
 
 import { bindActionCreators, createStore } from 'redux';
@@ -73,7 +75,6 @@ function Home(props) {
     }, [props.assistant]);
 
     useEffect(() => {
-        console.log("Entrei aqqqqqq");
         let x = pedidoChat && props.chat.filter(msg => {
             return msg.id_pedido == pedidoChat.id_pedido;
         });
@@ -111,7 +112,6 @@ function Home(props) {
     }
 
     async function handleButton(pedido) {
-        console.log(pedido.status);
         if (pedido.status == "Entregue") {
             refazerPedido(pedido.id_pedido);
         }
@@ -276,5 +276,5 @@ const mapStateToProps = state => ({
     assistant: state.assistant.assistant
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(chatAction, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({...chatAction,...carrinhoAction}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

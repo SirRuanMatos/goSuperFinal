@@ -9,12 +9,12 @@ async function generateToken(params = {}) {
   });
 }
 
-module.exports = { 
+module.exports = {
   async insert(req, resp) {
     const form = req.body;
     let crypt;
 
-    crypt = await bcrypt.hash(process.env.SENHA_PASS+req.body.senha, 10);
+    crypt = await bcrypt.hash(process.env.SENHA_PASS + req.body.senha, 10);
 
     req.body.senha = crypt;
 
@@ -54,11 +54,13 @@ module.exports = {
 
     if (response.rowCount == 0) {
       resp.status(401).send({ error: "Email inválido" });
+      return
     } else {
 
-      if (!await bcrypt.compare( process.env.SENHA_PASS+form.senha, response.rows[0].senha))
+      if (!await bcrypt.compare(process.env.SENHA_PASS + form.senha, response.rows[0].senha)) {
         resp.status(401).send({ error: "Senha inválida" });
-
+        return
+      }
       const token = await generateToken({ id_login: response.rows[0].id_login });
 
       response.rows[0].senha = undefined;
@@ -66,9 +68,9 @@ module.exports = {
       resp.status(200).send(response.rows[0]);
     }
   },
-  async delete(req,resp){
+  async delete(req, resp) {
     const id = req.params.id;
-    
+
     const response = await LoginDao.delete(id);
 
     resp.status(200).send(response);
